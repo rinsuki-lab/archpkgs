@@ -10,7 +10,7 @@ jobs:
     container:
       image: archlinux:base-devel
     steps:
-    - run: pacman -Syu --noconfirm
+    - run: pacman -Syu --noconfirm archlinux-repro
     - uses: actions/checkout@v4
       with:
         submodules: true
