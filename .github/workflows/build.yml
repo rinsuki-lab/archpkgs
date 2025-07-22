@@ -13,6 +13,8 @@ jobs:
     - run: pacman -Syu --noconfirm archlinux-repro
     - run: useradd -m grandma # will build packages for you!
     - run: "sed -i 's@^root ALL=(ALL:ALL) ALL$@root ALL=(ALL:ALL) ALL\\ngrandma ALL=(ALL:ALL) NOPASSWD: /usr/bin/pacman@' /etc/sudoers"
+    - run: "sed -i 's@-march=x86-64 @-march=x86-64-v3 @g' /etc/makepkg.conf"
+    - run: 'sed -i "s@#MAKEFLAGS=\"-j2\"@MAKEFLAGS=\"-j$(nproc)\"@" /etc/makepkg.conf'
     - uses: actions/checkout@v4
       with:
         submodules: true
