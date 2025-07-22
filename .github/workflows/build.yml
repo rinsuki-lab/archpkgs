@@ -12,7 +12,7 @@ jobs:
     steps:
     - run: pacman -Syu --noconfirm archlinux-repro
     - run: useradd -m grandma # will build packages for you!
-    - run: "sed -i 's@^root ALL=(ALL:ALL) ALL$@root ALL=(ALL:ALL) ALL\ngrandma ALL=(ALL:ALL) NOPASSWD: /usr/bin/pacman@' /etc/sudoers"
+    - run: "sed -i 's@^root ALL=(ALL:ALL) ALL$@root ALL=(ALL:ALL) ALL\\ngrandma ALL=(ALL:ALL) NOPASSWD: /usr/bin/pacman@' /etc/sudoers"
     - uses: actions/checkout@v4
       with:
         submodules: true
