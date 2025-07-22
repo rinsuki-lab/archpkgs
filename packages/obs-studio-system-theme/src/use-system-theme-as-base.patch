@@ -1,0 +1,14 @@
+--- a/UI/obs-app-theming.cpp	2025-06-28 07:36:45
++++ b/UI/obs-app-theming.cpp	2025-07-22 11:27:32
+@@ -868,11 +868,7 @@
+ bool OBSApp::InitTheme()
+ {
+ 	defaultPalette = palette();
+-#if !defined(_WIN32) && !defined(__APPLE__)
+-	setStyle(new OBSProxyStyle("Fusion"));
+-#else
+ 	setStyle(new OBSProxyStyle());
+-#endif
+ 
+ 	/* Set search paths for custom 'theme:' URI prefix */
+ 	string searchDir;

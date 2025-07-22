@@ -1,0 +1,3 @@
+[submodule "packages/obs-studio-system-theme/upstream"]
+	path = packages/obs-studio-system-theme/upstream
+	url = https://gitlab.archlinux.org/archlinux/packaging/packages/obs-studio

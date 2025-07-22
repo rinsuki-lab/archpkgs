@@ -1,0 +1,25 @@
+on:
+  push:
+  pull_request:
+
+name: Build
+
+jobs:
+  build_packages:
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:base-devel
+    steps:
+    - run: pacman -Syu --noconfirm
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+    - run: |
+        set -xe
+        patch -p1 < ../PKGBUILD.patch
+        makepkg --noconfirm --syncdeps
+      working-directory: packages/obs-studio-system-theme/upstream
+    - uses: actions/upload-artifact@v4
+      with:
+        name: obs-studio-system-theme.pkg
+        path: packages/obs-studio-system-theme/*.pkg.tar.zst
