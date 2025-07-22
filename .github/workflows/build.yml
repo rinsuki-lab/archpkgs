@@ -11,15 +11,18 @@ jobs:
       image: archlinux:base-devel
     steps:
     - run: pacman -Syu --noconfirm archlinux-repro
+    - run: useradd -m grandma # will build packages for you!
+    - run: "sed -i 's@^root ALL=(ALL:ALL) ALL$@grandma ALL=(ALL:ALL) NOPASSWD: /usr/bin/pacman@' /etc/sudoers"
     - uses: actions/checkout@v4
       with:
         submodules: true
     - run: |
         set -xe
         patch -p1 < ../PKGBUILD.patch
-        makepkg --noconfirm --syncdeps
+        chown -R grandma ..
+        sudo -u grandma makepkg --noconfirm --syncdeps
       working-directory: packages/obs-studio-system-theme/upstream
     - uses: actions/upload-artifact@v4
       with:
-        name: obs-studio-system-theme.pkg
+        name: pkg.obs-studio-system-theme
         path: packages/obs-studio-system-theme/*.pkg.tar.zst
