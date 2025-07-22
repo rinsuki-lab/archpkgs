@@ -1,5 +1,5 @@
 diff --git a/PKGBUILD b/PKGBUILD
-index da896ea..a144f46 100644
+index da896ea..9ba5888 100644
 --- a/PKGBUILD
 +++ b/PKGBUILD
 @@ -2,7 +2,8 @@
@@ -7,23 +7,26 @@ index da896ea..a144f46 100644
  # Contributor: Maciek Marciniak <mm2pl at kotmisia.pl>
  
 -pkgname=obs-studio
-+origpkgname=obs-studio
-+pkgname=obs-studio-system-theme
++_pkgname=obs-studio
++pkgname="$_pkgname-system-theme"
  pkgver=31.0.4
  pkgrel=1
  pkgdesc="Free, open source software for live streaming and recording"
-@@ -22,16 +23,18 @@ optdepends=('libfdk-aac: FDK AAC codec support'
+@@ -22,16 +23,21 @@ optdepends=('libfdk-aac: FDK AAC codec support'
              'sndio: Sndio input client'
              'qrcodegencpp-cmake: websocket support'
              'v4l2loopback-dkms: virtual camera support')
 -source=($pkgname-$pkgver.tar.gz::https://github.com/obsproject/obs-studio/releases/download/$pkgver/OBS-Studio-$pkgver-Sources.tar.gz)
 -sha256sums=('ff9b49dbb89248064e4c9e9f8fb41dc8998bfa9d36842aae0a442a55f166ec0c')
-+source=($origpkgname-$pkgver.tar.gz::https://github.com/obsproject/obs-studio/releases/download/$pkgver/OBS-Studio-$pkgver-Sources.tar.gz use-system-theme-as-base.patch)
++source=($_pkgname-$pkgver.tar.gz::https://github.com/obsproject/obs-studio/releases/download/$pkgver/OBS-Studio-$pkgver-Sources.tar.gz use-system-theme-as-base.patch)
 +sha256sums=('ff9b49dbb89248064e4c9e9f8fb41dc8998bfa9d36842aae0a442a55f166ec0c' SKIP)
++
++provides=("$_pkgname=$pkgver")
++conflicts=("$_pkgname")
  
  prepare() {
 -  cd $pkgname-$pkgver-sources
-+  cd $origpkgname-$pkgver-sources
++  cd $_pkgname-$pkgver-sources
 +
 +  patch -p1 -i ../use-system-theme-as-base.patch
  }
@@ -31,7 +34,7 @@ index da896ea..a144f46 100644
  build() {
    export CFLAGS+=" -Wno-error=deprecated-declarations"
 -  cmake -B build -S $pkgname-$pkgver-sources \
-+  cmake -B build -S $origpkgname-$pkgver-sources \
++  cmake -B build -S $_pkgname-$pkgver-sources \
      -DCMAKE_INSTALL_PREFIX="/usr" \
      -DENABLE_BROWSER=OFF \
      -DENABLE_VST=ON \
