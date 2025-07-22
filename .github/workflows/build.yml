@@ -19,6 +19,7 @@ jobs:
     - run: |
         set -xe
         patch -p1 < ../PKGBUILD.patch
+        cp ../src/* ./
         chown -R grandma ..
         sudo -u grandma makepkg --noconfirm --syncdeps
       working-directory: packages/obs-studio-system-theme/upstream
